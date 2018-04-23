@@ -121,23 +121,21 @@ void send_answer(int socket, int value)
    @socket TCP socket to read from */
 int get_status(int socket)
 {
+	const char *answers[] = {
+		"SUCCESS\n", "FAIL\n", "TIMELIMIT\n", "GOODBYE\n", NULL
+	};
 	char buffer[32];
-	const char *answers[] = { "SUCCESS", "FAIL", "TIMELIMIT", "GOODBYE" };
-
-	ssize_t x = recv(socket, buffer, 32, 0);
-	if(x < 0)
-	{
-		fprintf(stderr, ERR "cannot read answer from server: %m\n");
-		return -1;
-	}
-
 	int status;
-	for(status = 0; status <= 3; status++)
+
+	recv(socket, buffer, 1, 0);
+
+	for(status = 0; answers[status]; status++)
+	if(answers[status][0] == buffer[0])
 	{
-		if(!strcmp(answers[status], buffer)) return status;
+		recv(socket, buffer, strlen(answers[status]) - 1, 0);
+		return status;
 	}
 
-	printf("%s\n", buffer);
 	return status;
 }
 
@@ -173,23 +171,6 @@ int main(void)
 		int status = get_status(tcp_socket);
 		printf("Status code is %d\n", status);
 	}
-
-#if 0
-	/* Try to get 256 bytes of data from the server */
-	char buffer[256];
-
-	x = recv(tcp_socket, buffer, 256, 0);
-	if(x < 0)
-	{
-		fprintf(stderr, "Cannot read from server: %m\n");
-		close(tcp_socket);
-		return 1;
-	}
-
-	printf("Successfully received %d bytes of data", x);
-
-	write(2, buffer, x);
-#endif
 
 	close(tcp_socket);
 	return 0;
