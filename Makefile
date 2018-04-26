@@ -1,5 +1,9 @@
-targets	= exercice1/exercice1
-cflags	= -Wall -Wextra -std=c11 -O2
+#! /usr/bin/make -f
+
+targets	= exercice1/exercice1 \
+	  exercice2/bruiteur exercice2/code_ascii exercice2/programme_2 \
+	  exercice2/programme_3
+cflags	= -Wall -Wextra -std=c11 -O2 -lpng
 
 all: $(targets)
 
