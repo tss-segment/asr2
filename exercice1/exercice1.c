@@ -20,30 +20,6 @@
 #define ERR "\e[31;1merror:\e[0m "
 
 //---
-//	Question 1
-//---
-
-/* say_hello() - say hello, check if server is polite
-   Prints the server's answer on stdout. Returns nonzero on error. */
-int say_hello(int socket_fd)
-{
-	/* This function does not print anything on error */
-	ssize_t size;
-	char buffer[32];
-
-	size = write(socket_fd, "Hello", 5);
-	if(size != 5) return 1;
-
-	size = read(socket_fd, buffer, 31);
-	if(size < 0) return 1;
-
-	buffer[size] = 0;
-	puts(buffer);
-
-	return 0;
-}
-
-//---
 //	Question 3 - Average color
 //---
 
@@ -229,31 +205,14 @@ int get_status(int socket)
 	return status;
 }
 
-int main(int argc, char **argv)
+int main(void)
 {
-	/* Parse command-line arguments */
-
-	int mode_q1 = 0;
-	for(int i = 1; i < argc; i++)
-	{
-		if(!strcmp(argv[i], "-q1")) mode_q1 = 1;
-	}
-
 	/* Connect to server */
 
 	int tcp_socket = connect_to_server();
 	if(tcp_socket < 0) return 1;
 
 	printf("Connection successful!\n");
-
-	/* If -q1 is specified, just say hello and leave */
-
-	if(mode_q1)
-	{
-		say_hello(tcp_socket);
-		close(tcp_socket);
-		return 0;
-	}
 
 	/* Receive images and return average colors */
 
