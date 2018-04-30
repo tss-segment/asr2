@@ -1,14 +1,8 @@
-# PNG images downloaded in ex. 1
-exercice1/*.png
+# PNG images downloaded in ex. 2
+exercice2/*.png
 
-# Exercice 1 executable program
-exercice1/exercice1
-
-# Exercice 2 executable programs
-exercice2/bruiteur
-exercice2/code_ascii
-exercice2/programme_2
-exercice2/programme_3
+# Exercice 2 executable program
+exercice2/exercice2
 
 #Exercice 3 executable programs
 exercice3/bruiteur

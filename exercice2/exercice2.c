@@ -115,7 +115,7 @@ const char *status_names[] = {
 };
 
 /* connect_to_server() - open the connection, returning a TCP socket
-   This function opens the connection to 62.210.74.95:210 and returns an open
+   This function opens the connection to 62.210.74.95:11111 and returns an open
    socket for two-way communication, or a negative number on error. Close the
    returned socket with close(2). */
 int connect_to_server(void)
@@ -197,11 +197,11 @@ int get_status(int socket)
 	for(status = 0; status_names[status]; status++)
 	if(status_names[status][0] == buffer[0])
 	{
-		read(socket, buffer, strlen(status_names[status]) - 1);
+		read(socket, buffer + 1, strlen(status_names[status]) - 1);
 		return status;
 	}
 
-	printf("Weird status: %s\n", buffer);
+	printf("Weird status: %c\n", buffer[0]);
 	return status;
 }
 
@@ -250,7 +250,7 @@ int main(void)
 		avg_color(fp, avg);
 		printf("r%02x g%02x b%02x...", avg[0], avg[1], avg[2]);
 
-		/* Send the value of wait for the status code */
+		/* Send the value and wait for the status code */
 		send_answer(tcp_socket, avg);
 		status = get_status(tcp_socket);
 		printf(" %s", status_names[status]);
