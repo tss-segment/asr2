@@ -20,7 +20,7 @@ int G[4][8] = {
 };
 
 
-int main(int argc, char const *argv[]) {
+int main(void) {
         /* on lit sur stdin l'entree, 4 bits par 4 bits */
         /* on envoie la multiplication matricielle, et on affiche sur stdout */
         /* le résultat */

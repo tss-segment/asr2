@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
+#include <math.h>
 
 /* Objectif : débruiter le signal */
 /** Pour ce faire : je sais que le signal est soit (1,0) soit (-1,0) **/
@@ -9,7 +9,7 @@
 /* Pourquoi N1 ? Je sais pas, il faudra faire des tests pour savoir si N2 ou */
 /* Nsup ne seraient pas meilleures */
 
-int main(int argc, char const *argv[]) {
+int main(void) {
         /* lis l'entree avec getchar, et renvoie un signal débruité */
         double d_bit_0, d_bit_1;
         double a, b;
