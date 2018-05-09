@@ -111,7 +111,7 @@ int avg_color(FILE *fp, uint8_t *avg)
 
 /* Status names sent by the server */
 const char *status_names[] = {
-	"SUCCESS\n", "FAIL\n", "TIMELIMIT\n", "GOODBYE\n", NULL
+	"SUCCESS\n", "FAIL\n", "TIMEOUT\n", "GOODBYE\n", NULL
 };
 
 /* connect_to_server() - open the connection, returning a TCP socket
@@ -207,6 +207,9 @@ int get_status(int socket)
 
 int main(void)
 {
+	/* Disable buffering on stdout */
+	setvbuf(stdout, NULL, _IONBF, 0);
+
 	/* Connect to server */
 
 	int tcp_socket = connect_to_server();
@@ -252,6 +255,7 @@ int main(void)
 
 		/* Send the value and wait for the status code */
 		send_answer(tcp_socket, avg);
+
 		status = get_status(tcp_socket);
 		printf(" %s", status_names[status]);
 	}

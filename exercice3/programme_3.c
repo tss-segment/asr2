@@ -4,7 +4,7 @@
 
 /* float*float (I,Q) : module = amplitude; arg = phase */
 
-int main(int argc, char const *argv[]) {
+int main(void) {
         /* On fixe l'amplitude à 1 et la fréquence à 10 */
         /* Le temps incrémente de 1 à chaque nouveau complexe envoyé */
         /* Donc l'argument en 2*pi*f*t est toujours multiple de 2*pi */

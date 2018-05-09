@@ -1,3 +1,9 @@
+# Personal reports
+report/**
+
+# Packet captures from exercice 1
+exercice1/*.pcap
+
 # PNG images downloaded in ex. 2
 exercice2/*.png
 
@@ -5,10 +11,11 @@ exercice2/*.png
 exercice2/exercice2
 
 #Exercice 3 executable programs
-exercice3/bruiteur
-exercice3/code_ascii
+exercice3/programme_1
 exercice3/programme_2
 exercice3/programme_3
+exercice3/programme_4
 exercice3/programme_5
 exercice3/programme_6
 exercice3/programme_7
+exercice3/programme_8
