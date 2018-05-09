@@ -11,18 +11,18 @@
 
 int main(int argc, char const *argv[]) {
         /* lis l'entree avec getchar, et renvoie un signal débruité */
-        int d_bit_0, d_bit_1;
+        double d_bit_0, d_bit_1;
+        double a, b;
 
-        float a, b;
-
-        while ( (fscanf(stdin, "%f\n%f\n", &a, &b) != EOF) ) {
-              d_bit_0 = abs(-1.0-a);
-              d_bit_1 = abs(1-a);
+        while ( (fscanf(stdin, "%lf\n%lf\n", &a, &b) != EOF) ) {
+              d_bit_0 = fabs(-1.0-a);
+              d_bit_1 = fabs(1-a);
               if (d_bit_0 < d_bit_1) {
-                printf("%i", 0);
+                puts("-1.0\n0.0");
               } else {
-                printf("%i", 1);
+                puts("1.0\n0.0");
               }
         }
+
         return 0;
 }

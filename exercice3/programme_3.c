@@ -16,9 +16,9 @@ int main(void) {
         while ( (ascii = getchar()) && ascii != EOF) {
                 if (ascii == '0' ) {
                         /* le ascii de 0 est pair, celui de 1 impair */
-                        printf("%f\n%f\n", -1.0, 0.0);
+                        printf("%.1f\n%.1f\n", -1.0, 0.0);
                 } else if (ascii == '1') {
-                        printf("%f\n%f\n", 1.0, 0.0);
+                        printf("%.1f\n%.1f\n", 1.0, 0.0);
                 }
                 /* else : ignore */
         }
