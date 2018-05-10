@@ -43,7 +43,7 @@ int avg_color(FILE *fp, uint8_t *avg)
 
 	/* The volatile is required by the longjmp()-based exception handling
 	   if libpng */
-	uint32_t width = 0, height = 0;
+	png_uint_32 width = 0, height = 0;
 	volatile int r = 0, g = 0, b = 0;
 
 	png_structp png = NULL;
@@ -189,15 +189,18 @@ int get_status(int socket)
 {
 	char buffer[32];
 	int status;
+	size_t x;
 
 	/* Read the first letter, deduce the size and read the rest */
-	read(socket, buffer, 1);
+	x = read(socket, buffer, 1);
+	if(!x) return -1;
 
 	for(status = 0; status_names[status]; status++)
 	if(status_names[status][0] == buffer[0])
 	{
-		read(socket, buffer + 1, strlen(status_names[status]) - 1);
-		return status;
+		size_t length = strlen(status_names[status]) - 1;
+		x = read(socket, buffer + 1, length);
+		return (x == length) ? status : -1;
 	}
 
 	printf("Weird status: %c\n", buffer[0]);
