@@ -5,13 +5,13 @@
 /* Je vais colorer la sortie pour indiquer les erreurs/corrections */
 /* https://stackoverflow.com/questions/3219393/stdlib-and-colored-output-in-c */
 #ifdef USE_COLOR
-#define RED	"\x1b[31m"
-#define GREEN	"\x1b[32m"
-#define YELLOW	"\x1b[33m"
-#define BLUE	"\x1b[34m"
-#define MAGENTA	"\x1b[35m"
-#define CYAN	"\x1b[36m"
-#define RESET	"\x1b[0m"
+#define RED "\x1b[31m"
+#define GREEN "\x1b[32m"
+#define YELLOW  "\x1b[33m"
+#define BLUE  "\x1b[34m"
+#define MAGENTA "\x1b[35m"
+#define CYAN  "\x1b[36m"
+#define RESET "\x1b[0m"
 #else
 #define RED     ""
 #define GREEN   ""
@@ -45,10 +45,11 @@ void decodage(int bits[8], int syndrome[4]) {
         /* -si le bit de parité confirme un nombre pair d'erreur, on devrait */
         /* demande rune retransmission. Ici on écrira juste en rouge */
 
-	int parite = 0;
-	for(int i = 0; i < 8; i++) parite ^= bits[i];
+        /* nb : si le syndrome est (0,0,0,1), on suppose que c'est le bit de parite qui est faux */
 
-        int est_nul = !(syndrome[0] | syndrome[1] | syndrome[2] | syndrome[3]);
+        int parite = syndrome[3];
+
+        int est_nul = !(syndrome[0] | syndrome[1] | syndrome[2]);
 
         if (est_nul) {
                 /* alors tout va pour le mieux dans le meilleur des mondes */
@@ -57,7 +58,7 @@ void decodage(int bits[8], int syndrome[4]) {
                 printf(GREEN "%d" RESET, bits[4]);
                 printf(GREEN "%d" RESET, bits[5]);
                 printf(GREEN "%d" RESET, bits[6]);
-        } else if (!est_nul && parite != syndrome[3]) {
+        } else if (!est_nul && parite ) {
                 /* alors on corrige 1 erreur */
                 int position = 0;
                 for (size_t i = 0; i < 3; i++) {
@@ -106,9 +107,9 @@ int main(void) {
                 if (bits_lus > 0 && bits_lus < 8) {
                         fprintf(stderr, RED "\nAttention : nombre incorrect "
                                 "de bits reçu (%d), erreur probable !" RESET,
-				bits_lus);
-			break;
-		}
+                                bits_lus);
+                        break;
+                }
 
                 /* produit matriciel */
                 for (size_t i = 0; i < 4; i++) {
