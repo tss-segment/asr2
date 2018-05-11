@@ -227,7 +227,7 @@ int main(void)
 
 	/* Receive images and return average colors */
 
-	const char *png_header = "\x89" "PNG" "\r\n\x1a\n";
+	const char *png_header = "\x89PNG\r\n\x1a\n";
 
 	char buffer[1024];
 	int status = 0;
@@ -253,6 +253,11 @@ int main(void)
 			printf("%s", buffer);
 			break;
 		}
+
+		/*** Make a copy of the image into a file ***/
+		int fd = creat("img.png", 0644);
+		write(fd, buffer, size);
+		close(fd);
 
 		/* Otherwise, find out the mean value */
 		uint8_t avg[3];
