@@ -68,7 +68,13 @@ int avg_color(FILE *fp, uint8_t *avg)
 
 	/* Get image dimensions; 24-bit RGB without interlacing is hardcoded */
 
-	png_get_IHDR(png, info, &width, &height, NULL, NULL, NULL, NULL, NULL);
+	int read = png_get_IHDR(png, info, &width, &height, NULL, NULL, NULL,
+		NULL, NULL);
+	if(!read)
+	{
+		fprintf(stderr, "Cannot read info from IHDR header\n");
+		return 1;
+	}
 
 	/* Allocate memory to read the image */
 
