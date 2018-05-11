@@ -58,7 +58,12 @@ int avg_color(FILE *fp, uint8_t *avg)
 	info = png_create_info_struct(png);
 	if(!info) fail();
 
+	/* I've had compatibility issues with libpng 1.2 */
+	#ifdef USE_LIBPNG12
+	if(setjmp(png->jmpbuf)) fail();
+	#else
 	if(setjmp(png_jmpbuf(png))) fail();
+	#endif
 
 	/* Setup libpng and read "headers" */
 
@@ -68,13 +73,8 @@ int avg_color(FILE *fp, uint8_t *avg)
 
 	/* Get image dimensions; 24-bit RGB without interlacing is hardcoded */
 
-	int read = png_get_IHDR(png, info, &width, &height, NULL, NULL, NULL,
-		NULL, NULL);
-	if(!read)
-	{
-		fprintf(stderr, "Cannot read info from IHDR header\n");
-		return 1;
-	}
+	width = png_get_image_width(png, info);
+	height = png_get_image_height(png, info);
 
 	/* Allocate memory to read the image */
 
@@ -253,11 +253,6 @@ int main(void)
 			printf("%s", buffer);
 			break;
 		}
-
-		/*** Make a copy of the image into a file ***/
-		int fd = creat("img.png", 0644);
-		write(fd, buffer, size);
-		close(fd);
 
 		/* Otherwise, find out the mean value */
 		uint8_t avg[3];
