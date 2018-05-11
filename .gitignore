@@ -1,8 +1,9 @@
 # Personal reports
 report/**
 
-# Packet captures from exercice 1
-exercice1/*.pcap
+# Official files from exercice 1
+exercice1/dump.pcap
+exercice1/~totally-not-a-bad-virus.exe
 
 # PNG images downloaded in ex. 2
 exercice2/*.png
