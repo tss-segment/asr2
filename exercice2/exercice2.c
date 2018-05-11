@@ -76,7 +76,7 @@ int avg_color(FILE *fp, uint8_t *avg)
 	pixels = malloc(height * bytes_per_row);
 	if(!pixels) fail();
 
-	uint8_t *rows[height];
+	png_bytep rows[height];
 	for(size_t y = 0; y < height; y++)
 	{
 		rows[y] = pixels + y * bytes_per_row;
